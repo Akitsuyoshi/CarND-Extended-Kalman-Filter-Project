@@ -100,13 +100,14 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       float theta = measurement_pack.raw_measurements_[1];
       float velocity_r = measurement_pack.raw_measurements_[2];
       
-      ekf_.x_ << position_r * cos(theta),
-      			    position_r * sin(theta),
-      			    velocity_r * cos(theta),
-      			    velocity_r * sin(theta);
+      ekf_.x_ << position_r * cos(theta), // px
+      			    position_r * sin(theta), // py
+      			    velocity_r * cos(theta), // vx
+      			    velocity_r * sin(theta); // vy
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       // Initialize state.
+      // Laser only take position data px and py
       ekf_.x_ << measurement_pack.raw_measurements_[0],
                 measurement_pack.raw_measurements_[1],
                 0,
